@@ -1,29 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<!-- View port tag for proper rendering -->
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Git Show</title>
-
-	<!-- STYLESHEETS -->
-	<link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
-</head>
-
-<body>
-	<div class="container-fluid">
-		<header class="row">
-			<div class="col-md-9">
-				<h1>This is the header</h1>
+<% include ./partials/header.ejs %>
+		<div class="content-main">
+			<div class="row text-center">
+				<a class="btn btn-default" href="/user">Login</a>
 			</div>
-			<div class="col-md-3">
-				<button class="btn btn-default" type="submit">Settings</button>
+			<div class="row text-center">
+				<a class="btn btn-default" href="/user/new">Sign Up!</a>
 			</div>
-		</header>
-		<main>
-			<div class="row">
-			</div>
-		</main>
-	</div>	
-</body>
-</html>
+		</div>
+<% include ./partials/footer.ejs %>
