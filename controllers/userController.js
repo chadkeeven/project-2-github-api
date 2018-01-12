@@ -6,42 +6,62 @@ const router = express.Router();
 router.get('/', function homepage(req, res) {
   res.json("homePage");
 });
+/**********
+ * USER Routes *
+ **********/
 
 //NEW user page
 router.get('/user/new', function newUser(req,res){
 	res.send("new user page");
 });
 
-//CREATE 
+//CREATE user
+router.post('/user', function createUser(req,res){
+	res.send("created new user!");
+});
+
+//INDEX user account page
+router.get('/user', function indexUser(req,res){
+	res.send("User account page");
+});
 
 
-//User account page
+/**********
+ * SEARCH Routes *
+ **********/
 
-//Create Search page
+//INDEX all searches
+router.get('/user/searches', function indexSearch(req,res){
+	res.send("INDEX search page");
+});
+//NEW search page
+router.get('/user/searches/new', function newSearch(req,res){
+	res.send("NEW search page");
+});
+//CREATE search
+router.post('/user/searches', function createSearch(req,res){
+	res.send("CREATED search!");
+});
+//SHOW search by "nickname" of search
+router.get('/user/searches/:nickname', function showByNickNameSearch(req,res){
+	var nickName = req.params.nickname;
+	res.send(nickName + " page");
+});
+//EDIT search query page
+router.get('/user/searches/:nickname/edit', function editSearch(req,res){
+	var searchToEdit = req.params.nickname;
+	res.send(searchToEdit + "  EDIT page");
+});
+//UPDATE search by nickname
+router.put('/user/searches/:nickname', function updateSearch(req,res){
+	var updatedSearch = req.params.nickname;
+	res.send( updatedSearch + " has been UPDATED!");
+});
+//DELETE search query
+router.delete('/user/searches/:nickname', function deleteSearch(req,res){
+	var deletedSearch = req.params.nickname;
+	res.send(deletedSearch + " search has been DELETED!");
+});
 
-//Edit search query page
-
-//Delete search query
-
-
-// //Add new cargo
-// router.post('/cargo', cargoController.create);
-
-
-// function homePage (req,res){
-// 	res.json("hi");
-// }
-
-// function newCargo (req, res) { 
-// 	res.render('cargoNew');
-// 	} 
-
-// function createCargo(req, res) { //and look at that controller
-// 	db.Cargo.create({description: req.body.description, title: req.body.title}, function(error, cargo) {
-// 		res.render('cargoShow', {cargo: cargo});
-// 	});
-// }
-
-// module.exports.new = newCargo;
-// module.exports.create = createCargo;
+//Don't think i need this currently
 module.exports = router;
