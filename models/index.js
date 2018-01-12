@@ -1,6 +1,5 @@
 //Set up DB
 var mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost/gitshow");
-
+mongoose.connect( process.env.MONGODB_URI || "mongod://localhost/gitshow" );
 
 module.exports.User = require('./user');
