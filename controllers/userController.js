@@ -1,6 +1,7 @@
 let db = require("../models");
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
 
  //Home page
 router.get('/', function homepage(req, res) {
@@ -12,12 +13,17 @@ router.get('/', function homepage(req, res) {
 
 //NEW user page
 router.get('/user/new', function newUser(req,res){
-	res.send("new user page");
+	res.render("signup");
 });
 
 //CREATE user
-router.post('/user', function createUser(req,res){
-	res.send("created new user!");
+router.post('/user/new', function createUser(req,res, next){
+	let signupStrategy = passport.authenticate('local-signup', {
+		successRedirect:'/user',
+		failureRedirect: '/user/new',
+		failureFlash: true
+	});
+	return signupStrategy(req, res, next);
 });
 
 //INDEX user account page
