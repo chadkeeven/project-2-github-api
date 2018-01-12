@@ -1,9 +1,9 @@
-// const mongoose = require('mongoose');
-// var Schema = mongoose.Schema;
-// var CargoSchema = new Schema({
-//     title: String,
-//     description: String
-// });
-// var Cargo = mongoose.model('Cargo', CargoSchema);
+const mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+var UserSchema = new Schema({
+	username: String,
+	password: String
+});
+var User = mongoose.model('User', UserSchema);
 
-// module.exports = Cargo;
+module.exports = User;

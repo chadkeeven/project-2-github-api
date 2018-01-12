@@ -4,7 +4,7 @@ const router = express.Router();
 
  //Home page
 router.get('/', function homepage(req, res) {
-  res.json("homePage");
+  res.render("index");
 });
 /**********
  * USER Routes *
