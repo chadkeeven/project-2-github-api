@@ -44,14 +44,19 @@ router.post('/user/login', function postLogin(req, res, next) {
 
 //INDEX user account page
 router.get('/user', function indexUser(req,res){
-	res.currentUser = req.user;
-	res.render("userAccount");
+	console.log(req.user.email);
+	res.render("userAccount", {currentUser: req.user.email});
 });
 
 
 /**********
  * SEARCH Routes *
  **********/
+
+//Search page
+router.get('/search', function getSearchPage(req,res){
+	res.sendFile(__dirname + '/searchPage.html');
+}); 
 
 //INDEX all searches
 router.get('/user/searches', function indexSearch(req,res){

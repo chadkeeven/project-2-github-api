@@ -1,5 +1,8 @@
 <% include ./partials/header.ejs %>
 		<div class="content-main">
-		<p>Hello <%= currentUser.email %></p>
+		<p>Hello <%= currentUser %></p>
+			<div class="row text-center">
+				<a class="btn btn-default" href="/search">Search</a>
+			</div>
 		</div>
 <% include ./partials/footer.ejs %>
