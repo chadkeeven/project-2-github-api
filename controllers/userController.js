@@ -49,13 +49,14 @@ router.get('/user', function indexUser(req,res){
 });
 
 
+
 /**********
  * SEARCH Routes *
  **********/
 
 //Search page
 router.get('/search', function getSearchPage(req,res){
-	res.sendFile(__dirname + '/searchPage.html');
+	res.sendFile('searchPage.html', {root: "./views"});
 }); 
 
 //INDEX all searches

@@ -5,7 +5,7 @@
 	<!-- View port tag for proper rendering -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Git Searches</title>
-	    <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+	<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
 
 	<!-- STYLESHEETS -->
 	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
@@ -26,11 +26,21 @@
 		<div class="content-main">
 			<h2>Search by username</h2>
 			<div class="row text-center">
-				<form action="/search" method="GET">
-					<input type="search" name="search">
+				<form action="/search" id="usernameSearch" method="GET">
+					<input id="searchBox" type="search" name="search">
 					<input type="submit">
 				</form>
 			</div>
+			<section class="container">
+				<div class="row">
+					<div class="col-md-10 col-md-offset-1">
+						<h2>Results</h2>
+					</div>
+				</div>
+				<!-- RESULTS -->
+				<div id='searchResults'>
+				</div>
+			</section>
 		</div>
 	</div>	
 </body>
