@@ -44,6 +44,7 @@ router.post('/user/login', function postLogin(req, res, next) {
 
 //INDEX user account page
 router.get('/user', function indexUser(req,res){
+	res.currentUser = req.user;
 	res.render("userAccount");
 });
 

@@ -32,6 +32,11 @@ app.use(flash());
 
 require('./config/passport')(passport);
 
+// app.use(function(req, res, next){
+// 	res.currentUser = req.user;
+// 	next();
+// });
+
 //Set up Router
 let userRouter = require("./controllers/userController");
 app.use("/", userRouter);

@@ -54,11 +54,10 @@ module.exports = function(passport) {
 				return callback(err);
 			}//If no user is found
 			if (!user) {
-				console.log(user.email);
 				return callback(null,false, req.flash("loginMessage", "No user found!"));
 			}//Wrong password
 			if (!user.validPassword(password)) {
-				return callback(null, false, req.flash("loginMessage", "Oops! Wrong password! Profile has been terminated!"));
+				return callback(null, false, req.flash("loginMessage", "Oops! Wrong password!"));
 			}
 			return callback(null, user);
 		});
