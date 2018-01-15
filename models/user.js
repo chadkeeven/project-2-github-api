@@ -7,11 +7,11 @@ var UserSchema = new Schema({
 });
 
 UserSchema.methods.encrypt = function(password){
-	bcrypt.hashSync(password, bcrypt.genSaltSync(8));
+	return bcrypt.hashSync(password, bcrypt.genSaltSync(8));
 };
 
 UserSchema.methods.validPassword = function(password) {
-	bcrypt.compareSync(password, this.local.password);
+	return bcrypt.compareSync(password, this.password);
 };
 
 var User = mongoose.model('User', UserSchema);
