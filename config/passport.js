@@ -17,11 +17,10 @@ module.exports = function(passport) {
 		usernameField: 'email',
 		passReqToCallback: true
 	}, function(req, email, password, callback){
-		//console.log("email: " + email);
-		//console.log(User);
 		User.findOne({'email': email}, function(err, user){
-			console.log(err);
-			console.log("user: ");
+			console.log(email);
+			console.log(password);
+			//console.log("user: " + user);
 			//There was an error
 			if(err) return callback(err);
 			//There is a user with this email
@@ -43,4 +42,28 @@ module.exports = function(passport) {
 			}
 		});
 	}));
+
+	passport.use('local-login', new LocalStrategy( {
+		usernameField : 'email',
+		passwordField : 'password',
+		passReqToCallback : true
+	}, function(req, email, password, callback) {
+		User.findOne({"email" : email }, function(err, user){
+			if (err) {
+				console.log(err);
+				return callback(err);
+			}//If no user is found
+			if (!user) {
+				console.log(user.email);
+				return callback(null,false, req.flash("loginMessage", "No user found!"));
+			}//Wrong password
+			if (!user.validPassword(password)) {
+				return callback(null, false, req.flash("loginMessage", "Oops! Wrong password! Profile has been terminated!"));
+			}
+			return callback(null, user);
+		});
+	}
+	));
 };
+
+

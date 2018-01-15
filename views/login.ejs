@@ -1,12 +1,11 @@
 <% include ./partials/header.ejs %>
-<h2>Signup</h2>
+	<h1>Login Page</h1>
   <% if (message.length > 0) { %>
     <div class="alert alert-danger"><%= message %></div>
   <% } %>
-	<form action="/user/new" method="POST">
+	<form action="/user/login" method="POST">
 	<input type="email" name="email">
 	<input type="password" name="password">
 	<input type="submit">
 </form>
 <% include ./partials/footer.ejs %>
-

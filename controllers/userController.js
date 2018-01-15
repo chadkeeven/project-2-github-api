@@ -13,7 +13,7 @@ router.get('/', function homepage(req, res) {
 
 //NEW user page
 router.get('/user/new', function newUser(req,res){
-	res.render("signup");
+	res.render("signup", { message: req.flash("signupMessage")});
 });
 
 //CREATE user
@@ -26,9 +26,25 @@ router.post('/user/new', function createUser(req,res, next){
 	return signupStrategy(req, res, next);
 });
 
+// GET User login page
+router.get('/user/login',function getLogin(req, res, next) {
+	res.render("login",{ message: req.flash("loginMessage")});
+});
+
+// POST /login 
+router.post('/user/login', function postLogin(req, res, next) {
+	var loginStrategy = passport.authenticate('local-login', {
+		successRedirect : '/user',
+		failureRedirect : '/user/login',
+		failureFlash : true
+	});
+
+	return loginStrategy(req, res, next);
+});
+
 //INDEX user account page
 router.get('/user', function indexUser(req,res){
-	res.send("User account page");
+	res.render("userAccount");
 });
 
 
