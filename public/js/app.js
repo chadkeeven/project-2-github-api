@@ -18,10 +18,18 @@ $(document).ready(function() {
 			//console.log(json[0].languages_url);
 			var repoLanguageURL = json[2].languages_url;
 			$.get(repoLanguageURL, function(json){
-				var stringJson = JSON.stringify(json);
 				console.log(json);
-				var lanArr = json.split(",");
+				var stringJson = JSON.stringify(json);
+				var replacedJson = stringJson.replace("{","");
+				//console.log(stringJson);
+				var lanArr = replacedJson.split(",");
 				console.log(lanArr);
+				var totalBytes = 0;
+				// lanArr.forEach(function(lang, index){
+
+				// 	console.log(lang);
+				// });
+				//console.log(lanArr);
 				//var parsedJson= $.parseJSON(json);
 				var resultsHTML = 
 				"<!-- result -->" +
