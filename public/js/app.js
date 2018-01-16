@@ -4,7 +4,6 @@ $(document).ready(function() {
 	var totalBytes = 0;
 	var languageArr=[];
 	var languagesUsed =[];
-	//var languageFound = false;
 	var langObj={};
 	var indexOfLanguage;
 
@@ -24,19 +23,23 @@ $(document).ready(function() {
 
 	//Function that renders results and places results on page
 	function renderResults(githubSearch){
+		console.log("1)activated");
 		getApiRequest(githubSearch);	
 
 	}
 
 	//Function that gets api request
 	function getApiRequest(githubSearch){
+	console.log("2)getApiRequest");
 		$.get(githubSearch, function(json){
+			console.log("3)getting github url api");
 			getRepo(json);
 		});
 	} 
 
 	//Function that goes through each repo
 	function getRepo(json){
+console.log("4)getRepo");
 		// for (var i = 0; i < 1; i++) {
 		// 	console.log(json[i].name);
 		// 	var repoLanguageURL = json[i].languages_url;
@@ -53,7 +56,9 @@ $(document).ready(function() {
 
 	//function that gets the JSON in the language url
 	function getRepoLanguageJson(repoLanguageURL){
+console.log("5)getting languages from each repo");
 		$.get(repoLanguageURL, function(json){
+console.log("6)modifying objects");
 			//console.log(repoLanguageURL);
 			//console.log(json);
 			var stringJson = JSON.stringify(json);
@@ -64,6 +69,7 @@ $(document).ready(function() {
 			var lanArr = replacedJson.split(",");
 			//	console.log("New lanArr: "+lanArr);
 			lanArr.forEach(function(lang, index){
+console.log("7)Adding objects to array or adding values");
 				var splitLang = lang.split(":");
 				//console.log(splitLang[0]);
 				//console.log( " languagesUsed are: "+ languagesUsed);
@@ -75,7 +81,10 @@ $(document).ready(function() {
 					//if languageAlreadyAdded returns true we still want to add
 					//the value of the bytes to the langguage it matches in the languageArr
 					if(languageAlreadyAdded(splitLang[0])){
-					//console.log(languageArr[indexOfLanguage].amountOfLanguage);
+						//console.log("Language has been added but we are adding to amount of Language");
+						//console.log("Index to add to: "+indexOfLanguage);
+					//	console.log(languageArr[indexOfLanguage]);
+					//console.log("amountOfLanguage before adding: "+languageArr[indexOfLanguage].amountOfLanguage);
 						languageArr[indexOfLanguage].amountOfLanguage += parseInt(splitLang[1]);
 					//if language hasn't been added we want to make a langObj
 					//and push into languageArr
@@ -107,24 +116,30 @@ $(document).ready(function() {
 	//function that checks to see if language has already been added
 	//to master array
 	function languageAlreadyAdded(languageToCheck){
+		//check to see if languageToCheck and language are the same
 		function something(language){
-			console.log("Language to Check: "+languageToCheck);
-			console.log("Language: "+ language);
-			console.log(languageToCheck == language);
+			//console.log("Language to Check: "+languageToCheck);
+			//console.log("Language: "+ language);
+			//console.log(languageToCheck == language);
 			return  languageToCheck == language;
 		}
+		//.log(languagesUsed.findIndex(something));
+		//console.log(languagesUsed.findIndex(something) === -1);
+		//if index is -1 that means it wasn't found which means we need to return
+		//false to create new langObj in getRepoLanguageJson
 		if (languagesUsed.findIndex(something) === -1) {
 			return false;
+		//if found we want indexOflanguage to equal the index so we can add to the amountOfLanguage
 		}else{
 			indexOfLanguage = languagesUsed.findIndex(something);
-			//console.log(languagesUsed.findIndex(something));
+			//console.log(indexOfLanguage);
 			return true;
 		}
 	}
 
 	//function that appends results to page
 	function addResults(languageArr){
-		//console.log(languageArr);
+		console.log(languageArr);
 		bytesToPercent(languageArr);
 		languageArr.forEach(function(program, index){
 			var resultsHTML = 
