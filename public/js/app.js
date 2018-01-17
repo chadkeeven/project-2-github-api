@@ -6,14 +6,16 @@ $(document).ready(function() {
 	var languagesUsed =[];
 	var langObj={};
 	var indexOfLanguage;
+	var userNameToSearch;
 
 	//reset languageArr, languagesUsed after every submit
 
 	$("#usernameSearch").submit(function(event){
 		event.preventDefault();
-		var userNameToSearch = $("#searchBox").val();
+		userNameToSearch = $("#searchBox").val();
 		//console.log(userNameToSearch);
 		var userNameURL = url + userNameToSearch;
+		console.log(userNameURL);
 		const reposURL = userNameURL + "/repos";
 		//console.log(languageArr);
 		const sortByCreateURL = reposURL + "?sort=created";
@@ -61,7 +63,7 @@ $(document).ready(function() {
 
 	//function that gets the JSON in the language url
 	function getRepoLanguageJson(repoLanguageURL){
-	return	$.get(repoLanguageURL, function(json){
+		return	$.get(repoLanguageURL, function(json){
 			var stringJson = JSON.stringify(json);
 			if (stringJson != "{}") {
 				var replacedJson = stringJson.replace(/{|}/g,"");
@@ -132,8 +134,17 @@ $(document).ready(function() {
 	function addResults(){
 
 		bytesToPercent(languageArr);
+		var usernameHTML = 
+		"<!-- username -->" +
+		"<div class= 'row'>" +
+		"<div class='col-md-12'>" +
+		"<a class='btn btn-default' href='/user/canidate/new'>" +
+		userNameToSearch +
+		"</a>" +
+		"</div>" + 
+		"</div>";
+		$(usernameHTML).appendTo('#searchResults');
 		languageArr.forEach(function(lang, index){
-			//totalBytes += lang.amountOfLanguage;
 			var resultsHTML = 
 			"<!-- result -->" +
 			"<div class= 'row'>" +

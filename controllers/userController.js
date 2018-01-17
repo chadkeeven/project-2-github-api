@@ -63,13 +63,13 @@ router.get('/search', function getSearchPage(req,res){
 router.get('/user/searches', function indexSearch(req,res){
 	res.send("INDEX search page");
 });
-//NEW search page
-router.get('/user/searches/new', function newSearch(req,res){
-	res.send("NEW search page");
+//NEW canidate page
+router.get('/user/canidate/new', function newCanidate(req,res){
+	res.render("createCanidate");
 });
-//CREATE search
-router.post('/user/searches', function createSearch(req,res){
-	res.send("CREATED search!");
+//CREATE canidate
+router.post('/user/canidate', function createCanidate(req,res){
+	res.send("CREATED Canidate!");
 });
 //SHOW search by "nickname" of search
 router.get('/user/searches/:nickname', function showByNickNameSearch(req,res){
