@@ -31,7 +31,7 @@ router.get('/user/login',function getLogin(req, res, next) {
 	res.render("login",{ message: req.flash("loginMessage")});
 });
 
-// POST /login 
+// POST login 
 router.post('/user/login', function postLogin(req, res, next) {
 	var loginStrategy = passport.authenticate('local-login', {
 		successRedirect : '/user',
@@ -59,14 +59,17 @@ router.get('/user', function indexUser(req,res){
 					lable: canidateLable
 				};
 				savedCandiatesArr.push(savedCandiate);
-				//savedCandiatesLableArr.push(canidateLable);
 			}
 		});
 		res.render("userAccount", {currentUser: req.user.email, savedCandiates: savedCandiatesArr});
 	});
+});
 
-	//console.log(req.user.email);
-	
+//Logout user
+
+router.get('/user/logout',function getLogout(request, response, next) {
+  request.logout();
+  response.redirect('/');
 });
 
 
