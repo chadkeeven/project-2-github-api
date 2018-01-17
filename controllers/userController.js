@@ -4,9 +4,9 @@ const router = express.Router();
 const passport = require('passport');
 
  //Home page
-router.get('/', function homepage(req, res) {
-  res.render("index");
-});
+ router.get('/', function homepage(req, res) {
+ 	res.render("index");
+ });
 /**********
  * USER Routes *
  **********/
@@ -44,11 +44,25 @@ router.post('/user/login', function postLogin(req, res, next) {
 
 //INDEX user account page
 router.get('/user', function indexUser(req,res){
+	var savedCandiatesArr = [];
+	//var savedCandiatesLableArr = [];
 	db.Canidate.find(function(err, canidates){
 		if (err) {
-			res.json(err);
+			res.send(err);
 		}
-		res.render("userAccount", {currentUser: req.user.email, savedCandiates: canidates[0]});
+		canidates.forEach(function(canidate, index){
+			if (canidate.user == req.user.email) {
+				var canidateName = canidates[index].username;
+				var canidateLable = canidates[index].lable;
+				var savedCandiate = {
+					username: canidateName,
+					lable: canidateLable
+				};
+				savedCandiatesArr.push(savedCandiate);
+				//savedCandiatesLableArr.push(canidateLable);
+			}
+		});
+		res.render("userAccount", {currentUser: req.user.email, savedCandiates: savedCandiatesArr});
 	});
 
 	//console.log(req.user.email);
@@ -81,16 +95,16 @@ router.post('/user/canidate', function createCanidate(req,res){
 	var newUserName = req.body.username;
 	var newLable = req.body.lable;
 	var userAssociatedWith = req.user.email;
-  var newCanidate = {
-    username: newUserName,
-    lable: newLable,
-    user: userAssociatedWith
-  };
-  db.Canidate.create(newCanidate, function(err, canidate){
-  	if (err) {
-  		res.json("Sorry error");
-  	}
-  });
+	var newCanidate = {
+		username: newUserName,
+		lable: newLable,
+		user: userAssociatedWith
+	};
+	db.Canidate.create(newCanidate, function(err, canidate){
+		if (err) {
+			res.json("Sorry error");
+		}
+	});
 	res.redirect("/user");
 });
 //SHOW search by "nickname" of search

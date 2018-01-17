@@ -1,22 +1,25 @@
 <% include ./partials/header.ejs %>
-		<div class="content-main">
-		<p>Hello <%= currentUser %></p>
-			<div class="row text-center">
-				<a class="btn btn-default" href="/search">Search</a>
-			</div>
-			<div class="row">
-					<div class="col-md-10 col-md-offset-1">
-						<h2 class="text-center">Saved Canidates</h2>
-					</div>
-					<!-- Canidates -->
-				<div id='canidateResults'>
-					<ul class='list-group'> 
-				 <li class='list-group-item'> 
-							<%= savedCandiates %>
-						</li>
-					</ul>
-					
-				</div>
-				</div>
+<div class="content-main">
+	<p>Hello <%= currentUser %></p>
+	<div class="row text-center">
+		<a class="btn btn-default" href="/search">Search</a>
+	</div>
+	<div class="row">
+		<div class="col-md-10 col-md-offset-1">
+			<h2 class="text-center">Saved Canidates</h2>
 		</div>
-<% include ./partials/footer.ejs %>
+		<!-- Canidates -->
+		<div id='canidateResults'>
+			<ul class='list-group'> 
+				<% savedCandiates.forEach(function(canidate,index){ %> 
+					<li class='list-group-item'> 
+					<%= canidate.username %>
+					<%= canidate.lable %>
+					</li>
+					<% }) %>
+					</ul>
+
+					</div>
+					</div>
+					</div>
+					<% include ./partials/footer.ejs %>
