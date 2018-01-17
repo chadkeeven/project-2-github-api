@@ -44,8 +44,15 @@ router.post('/user/login', function postLogin(req, res, next) {
 
 //INDEX user account page
 router.get('/user', function indexUser(req,res){
-	console.log(req.user.email);
-	res.render("userAccount", {currentUser: req.user.email});
+	db.Canidate.find(function(err, canidates){
+		if (err) {
+			res.json(err);
+		}
+		res.render("userAccount", {currentUser: req.user.email, savedCandiates: canidates[0]});
+	});
+
+	//console.log(req.user.email);
+	
 });
 
 
@@ -65,11 +72,26 @@ router.get('/user/searches', function indexSearch(req,res){
 });
 //NEW canidate page
 router.get('/user/canidate/new', function newCanidate(req,res){
-	res.render("createCanidate");
+	res.sendFile("createCanidate.html",{root: "./views"} );
 });
 //CREATE canidate
 router.post('/user/canidate', function createCanidate(req,res){
-	res.send("CREATED Canidate!");
+	console.log(req.user.email);
+	//console.log(req.body);
+	var newUserName = req.body.username;
+	var newLable = req.body.lable;
+	var userAssociatedWith = req.user.email;
+  var newCanidate = {
+    username: newUserName,
+    lable: newLable,
+    user: userAssociatedWith
+  };
+  db.Canidate.create(newCanidate, function(err, canidate){
+  	if (err) {
+  		res.json("Sorry error");
+  	}
+  });
+	res.redirect("/user");
 });
 //SHOW search by "nickname" of search
 router.get('/user/searches/:nickname', function showByNickNameSearch(req,res){

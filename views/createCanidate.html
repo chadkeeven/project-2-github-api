@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<!-- View port tag for proper rendering -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Git Searches</title>
+	<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+
+	<!-- STYLESHEETS -->
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+
+	<!-- Javascript -->
+	<script src="../js/app.js"></script>
+</head>
+<body>
+	<div class="container-fluid">
+		<nav class="row">
+			<div class="col-md-9">
+				<h1><a href="/">GIT SHOW</a></h1>
+			</div>
+			<div class="col-md-3">
+				<button class="btn btn-default" type="submit">Settings</button>
+			</div>
+		</nav>
+<div class="content-main">
+	<p>Create new canidate</p>
+	<div class="row text-center">
+		<form action="/user/canidate" id="createCanidate" method="POST">
+			<div><h3>username:</h3>
+				<input type="text" name="username">
+			</div>
+			<div>
+				<h3>lable(e.g., MEAN Stack Developer):</h3>
+			<input type="text" name="lable" value="canidate">
+		</div>
+			<input class="btn btn-default" type="submit" value="Create">
+		</form>
+		<!-- <a class="btn btn-default" href="/user">Create</a> -->
+	</div>
+</div>
+	</div>	
+</body>
+</html>

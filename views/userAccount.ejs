@@ -4,5 +4,19 @@
 			<div class="row text-center">
 				<a class="btn btn-default" href="/search">Search</a>
 			</div>
+			<div class="row">
+					<div class="col-md-10 col-md-offset-1">
+						<h2 class="text-center">Saved Canidates</h2>
+					</div>
+					<!-- Canidates -->
+				<div id='canidateResults'>
+					<ul class='list-group'> 
+				 <li class='list-group-item'> 
+							<%= savedCandiates %>
+						</li>
+					</ul>
+					
+				</div>
+				</div>
 		</div>
 <% include ./partials/footer.ejs %>

@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var CanidateSchema = new Schema({
 	username: String,
-	lables: String
+	lable: String,
+	user: String
 });
 
 

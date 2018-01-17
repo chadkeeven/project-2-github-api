@@ -10,6 +10,18 @@ $(document).ready(function() {
 
 	//reset languageArr, languagesUsed after every submit
 
+	//When user clicks the createbutton on the createCanidate.html form
+	$("#createCanidate").submit(function(event) {
+		event.preventDefault();
+		var formData = $(this).serialize();
+        $.post("/user/canidate", formData);
+        $.get("/user", function(json, status){
+          //renderAlbum(json[json.length - 1]);
+        });
+	});
+
+
+	//When user clicks submit on the searchPage.html
 	$("#usernameSearch").submit(function(event){
 		event.preventDefault();
 		userNameToSearch = $("#searchBox").val();
