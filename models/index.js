@@ -3,4 +3,4 @@ var mongoose = require("mongoose");
 mongoose.connect( process.env.MONGODB_URI || "mongodb://localhost/gitshow" );
 
 module.exports.User = require('./user');
-module.exports.Canidate = require('./canidate');
+module.exports.Candidate = require('./candidate');

@@ -13,17 +13,14 @@
 <body>
 	<div class="container-fluid">
 		<nav class="row text-center">
-			<div class="col-md-9">
+			<div class="col-md-12">
 				<h1><a href="/">GIT SHOW</a></h1>
 				<% if (currentUser) {%>
 					<a class="btn btn-default" href="/user/logout">Logout <%= currentUser.email %></a>
-
+					<a class="btn btn-default" href="/user">Account</a>
 					<% } else { %>
 						<a class="btn btn-default" href="/user/login">Login</a>
 						<a class="btn btn-default" href="/user/new">Sign Up!</a> 
 						<% } %>
-					</div>
-					<div class="col-md-3">
-						<button class="btn btn-default" type="submit">Settings</button>
 					</div>
 				</nav>

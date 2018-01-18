@@ -20,19 +20,19 @@
 				<h1><a href="/">GIT SHOW</a></h1>
 			</div>
 			<div class="col-md-3">
-				<button class="btn btn-default" type="submit">Settings</button>
+				<a class="btn btn-default" href="/user">Account</a>
 			</div>
 		</nav>
 <div class="content-main">
-	<p>Create new canidate</p>
+	<p>Create new candidate</p>
 	<div class="row text-center">
-		<form action="/user/canidate" id="createCanidate" method="POST">
+		<form action="/user/candidate" id="createCandidate" method="POST">
 			<div><h3>username:</h3>
 				<input type="text" name="username">
 			</div>
 			<div>
 				<h3>lable(e.g., MEAN Stack Developer):</h3>
-			<input type="text" name="lable" value="canidate">
+			<input type="text" name="lable" value="candidate">
 		</div>
 			<input class="btn btn-default" type="submit" value="Create">
 		</form>

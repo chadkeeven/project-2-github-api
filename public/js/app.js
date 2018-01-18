@@ -10,11 +10,11 @@ $(document).ready(function() {
 
 	//reset languageArr, languagesUsed after every submit
 
-	//When user clicks the createbutton on the createCanidate.html form
-	$("#createCanidate").submit(function(event) {
+	//When user clicks the createbutton on the createcandidate.html form
+	$("#createCandidate").submit(function(event) {
 		event.preventDefault();
 		var formData = $(this).serialize();
-        $.post("/user/canidate", formData);
+        $.post("/user/candidate", formData);
         $.get("/user", function(json, status){
           //renderAlbum(json[json.length - 1]);
         });
@@ -150,7 +150,7 @@ $(document).ready(function() {
 		"<!-- username -->" +
 		"<div class= 'row'>" +
 		"<div class='col-md-12'>" +
-		"<a class='btn btn-default' href='/user/canidate/new'>" +
+		"<a class='btn btn-default' href='/user/candidate/new'>" +
 		userNameToSearch +
 		"</a>" +
 		"</div>" + 

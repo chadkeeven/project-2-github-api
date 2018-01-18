@@ -46,17 +46,17 @@ router.post('/user/login', function postLogin(req, res, next) {
 router.get('/user', function indexUser(req,res){
 	var savedCandiatesArr = [];
 	//var savedCandiatesLableArr = [];
-	db.Canidate.find(function(err, canidates){
+	db.Candidate.find(function(err, candidates){
 		if (err) {
 			res.send(err);
 		}
-		canidates.forEach(function(canidate, index){
-			if (canidate.user == req.user.email) {
-				var canidateName = canidates[index].username;
-				var canidateLable = canidates[index].lable;
+		candidates.forEach(function(candidate, index){
+			if (candidate.user == req.user.email) {
+				var candidateName = candidates[index].username;
+				var candidateLable = candidates[index].lable;
 				var savedCandiate = {
-					username: canidateName,
-					lable: canidateLable
+					username: candidateName,
+					lable: candidateLable
 				};
 				savedCandiatesArr.push(savedCandiate);
 			}
@@ -87,23 +87,23 @@ router.get('/search', function getSearchPage(req,res){
 router.get('/user/searches', function indexSearch(req,res){
 	res.send("INDEX search page");
 });
-//NEW canidate page
-router.get('/user/canidate/new', function newCanidate(req,res){
-	res.sendFile("createCanidate.html",{root: "./views"} );
+//NEW candidate page
+router.get('/user/candidate/new', function newCandidate(req,res){
+	res.sendFile("createcandidate.html",{root: "./views"} );
 });
-//CREATE canidate
-router.post('/user/canidate', function createCanidate(req,res){
+//CREATE candidate
+router.post('/user/candidate', function createCandidate(req,res){
 	console.log(req.user.email);
 	//console.log(req.body);
 	var newUserName = req.body.username;
 	var newLable = req.body.lable;
 	var userAssociatedWith = req.user.email;
-	var newCanidate = {
+	var newCandidate = {
 		username: newUserName,
 		lable: newLable,
 		user: userAssociatedWith
 	};
-	db.Canidate.create(newCanidate, function(err, canidate){
+	db.Candidate.create(newCandidate, function(err, candidate){
 		if (err) {
 			res.json("Sorry error");
 		}
