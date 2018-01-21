@@ -8,10 +8,10 @@
 	<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
 
 	<!-- STYLESHEETS -->
-	<link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">
 
 	<!-- Javascript -->
-	<script src="../js/app.js"></script>
+	<script src="../../../js/app.js"></script>
 </head>
 <body>
 	<div class="container-fluid">
@@ -24,18 +24,20 @@
 			</div>
 		</nav>
 		<div class="content-main">
-			<p>Create new candidate</p>
+			<p>Edit candidate</p>
 			<div class="row text-center">
-				<form action="/user/candidate" id="createCandidate" method="POST">
-					<div><h3>username:</h3>
-						<input type="text" name="username">
-					</div>
+				<form action="/user" method="GET" id="editCandidateForm">
 					<div>
-						<h3>lable(e.g., MEAN Stack Developer):</h3>
+						<h3>Edit lable of Candidate:</h3>
 						<input type="text" name="lable" value="candidate">
+						<input class="btn btn-default" type="submit" value="Save">
 					</div>
-					<input class="btn btn-default" type="submit" value="Create">
 				</form>
+				<form action="/user" method="GET" id="deleteCandidateForm">
+					<input class="btn btn-default" type="submit" value="Delete">
+				</form>
+			</div>
+			<div class="updateDiv">
 			</div>
 		</div>
 	</div>	

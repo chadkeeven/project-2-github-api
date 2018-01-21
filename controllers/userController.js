@@ -26,7 +26,7 @@ router.post('/user/new', function createUser(req,res, next){
 	return signupStrategy(req, res, next);
 });
 
-// GET User login page
+//GET User login page
 router.get('/user/login',function getLogin(req, res, next) {
 	res.render("login",{ message: req.flash("loginMessage")});
 });
@@ -43,9 +43,10 @@ router.post('/user/login', function postLogin(req, res, next) {
 });
 
 //INDEX user account page
+//INDEX all Canidates for user
 router.get('/user', function indexUser(req,res){
-	var savedCandiatesArr = [];
-	//var savedCandiatesLableArr = [];
+	console.log("User Page!");
+	var savedCandidatesArr = [];
 	db.Candidate.find(function(err, candidates){
 		if (err) {
 			res.send(err);
@@ -54,24 +55,24 @@ router.get('/user', function indexUser(req,res){
 			if (candidate.user == req.user.email) {
 				var candidateName = candidates[index].username;
 				var candidateLable = candidates[index].lable;
-				var savedCandiate = {
+				var candidateId = candidates[index]._id;
+				var savedCandidate = {
+					id: candidateId, 
 					username: candidateName,
 					lable: candidateLable
 				};
-				savedCandiatesArr.push(savedCandiate);
+				savedCandidatesArr.push(savedCandidate);
 			}
 		});
-		res.render("userAccount", {currentUser: req.user.email, savedCandiates: savedCandiatesArr});
+		res.render("userAccount", {currentUser: req.user.email, savedCandidates: savedCandidatesArr});
 	});
 });
 
 //Logout user
-
 router.get('/user/logout',function getLogout(request, response, next) {
-  request.logout();
-  response.redirect('/');
+	request.logout();
+	response.redirect('/');
 });
-
 
 
 /**********
@@ -83,18 +84,18 @@ router.get('/search', function getSearchPage(req,res){
 	res.sendFile('searchPage.html', {root: "./views"});
 }); 
 
-//INDEX all searches
-router.get('/user/searches', function indexSearch(req,res){
-	res.send("INDEX search page");
-});
+
+/**********
+ * CANDIDATE Routes *
+ **********/
+
+
 //NEW candidate page
 router.get('/user/candidate/new', function newCandidate(req,res){
-	res.sendFile("createcandidate.html",{root: "./views"} );
+	res.sendFile("createCandidate.html",{root: "./views"} );
 });
 //CREATE candidate
 router.post('/user/candidate', function createCandidate(req,res){
-	console.log(req.user.email);
-	//console.log(req.body);
 	var newUserName = req.body.username;
 	var newLable = req.body.lable;
 	var userAssociatedWith = req.user.email;
@@ -110,26 +111,52 @@ router.post('/user/candidate', function createCandidate(req,res){
 	});
 	res.redirect("/user");
 });
-//SHOW search by "nickname" of search
-router.get('/user/searches/:nickname', function showByNickNameSearch(req,res){
-	var nickName = req.params.nickname;
-	res.send(nickName + " page");
-});
-//EDIT search query page
-router.get('/user/searches/:nickname/edit', function editSearch(req,res){
-	var searchToEdit = req.params.nickname;
-	res.send(searchToEdit + "  EDIT page");
-});
-//UPDATE search by nickname
-router.put('/user/searches/:nickname', function updateSearch(req,res){
-	var updatedSearch = req.params.nickname;
-	res.send( updatedSearch + " has been UPDATED!");
-});
-//DELETE search query
-router.delete('/user/searches/:nickname', function deleteSearch(req,res){
-	var deletedSearch = req.params.nickname;
-	res.send(deletedSearch + " search has been DELETED!");
+
+//SHOW candidates saved by id
+router.get('/user/candidate/:id', function showCandidateById(req,res){
+	var candidate = req.params.id;
+	db.Candidate.findById(candidate,function(err, candidates){
+		if (err) {
+			res.send(err);
+		}
+		res.render('candidatePage', { currentCandidate: candidates });
+	});
 });
 
-//Don't think i need this currently
+//EDIT candidate lable page
+router.get('/user/candidate/:id/edit', function editCandidate(req,res){
+	var candidateToEdit = req.params.id;
+	console.log();
+	res.sendFile('editCandidate.html', { editCandidate: candidateToEdit,root: "./views"} );
+});
+
+
+//UPDATE candidate lable
+router.put('/user/candidate/:id', function updateCandidate(req,res){
+
+	var updatedCandidate = req.params.id;
+	db.Candidate.findOneAndUpdate({_id: updatedCandidate},
+		{$set: {
+			"lable" : req.body.lable, 
+		}}, {new:true}, function (err, candidate){
+			if (err) {
+				res.json("Can't Update");
+			}
+		});
+	console.log("Updated!");
+
+
+});
+
+
+//DELETE candidate
+router.delete('/user/candidate/:id/delete', function deleteCandidate(req,res){
+	var deletedCandidate = req.params.id;
+	console.log(deletedCandidate);
+	db.Candidate.remove({_id: deletedCandidate}, function(err,candidate){
+
+		console.log(candidate + "deleted!");
+	});
+});
+
 module.exports = router;

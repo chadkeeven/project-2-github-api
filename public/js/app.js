@@ -8,43 +8,70 @@ $(document).ready(function() {
 	var indexOfLanguage;
 	var userNameToSearch;
 
+	//To-Do
 	//reset languageArr, languagesUsed after every submit
 
 	//When user clicks the createbutton on the createcandidate.html form
 	$("#createCandidate").submit(function(event) {
 		event.preventDefault();
 		var formData = $(this).serialize();
-        $.post("/user/candidate", formData);
-        $.get("/user", function(json, status){
-          //renderAlbum(json[json.length - 1]);
-        });
+		$.post("/user/candidate", formData);
+		$.get("/user", function(json, status){
+		});
 	});
 
+	//When user clicks the save button on the editCandidate.html form
+	$("#editCandidateForm").submit(function(event) {
+		var pathUrl =window.location.pathname;
+		var substringPath= pathUrl.substring(0, pathUrl.length -5);
+		event.preventDefault();
+		var formData = $(this).serialize();
+		var updatedHTML = "<h2>Updated!</h2>";
+		$(updatedHTML).appendTo('.updateDiv');
+		$.put = function(url, data){
+			return $.ajax({
+				url: url,
+				type: 'PUT',
+				data: formData
+			});
+		};
+		$.put(substringPath,formData);
+	});
+
+		//When user clicks the delete button on the editCandidate.html form
+		$("#deleteCandidateForm").submit(function(event) {
+			var pathUrl =window.location.pathname;
+			var substringPath= pathUrl.substring(0, pathUrl.length -5);
+			var candidateUrl =   substringPath + "/delete";
+			event.preventDefault();
+			var deletedHTML = "<h2>Deleted!</h2>";
+			$(deletedHTML).appendTo('.updateDiv');
+			$.delete = function(url, data, callback, type){
+				console.log(url);
+				return $.ajax({
+					url: url,
+					type: 'DELETE'
+				});
+			};
+			$.delete(candidateUrl);
+		});
 
 	//When user clicks submit on the searchPage.html
 	$("#usernameSearch").submit(function(event){
 		event.preventDefault();
 		userNameToSearch = $("#searchBox").val();
-		//console.log(userNameToSearch);
 		var userNameURL = url + userNameToSearch;
-		console.log(userNameURL);
 		const reposURL = userNameURL + "/repos";
-		//console.log(languageArr);
-		const sortByCreateURL = reposURL + "?sort=created";
-		renderResults(sortByCreateURL);
-		//addResults();
-		//setTimeout(addResults(), 3000);
+		renderResults(reposURL);
 	});
 
 	//Function that renders results and places results on page
 	function renderResults(githubSearch){
 		var allGetRequests = [];
-		// getApiRequest(githubSearch);
 		$.get(githubSearch, function(json){
 			json.forEach(function(repo,index){
 				var repoLanguageURL = json[index].languages_url;
 				console.log(repoLanguageURL);
-				//getRepoLanguageJson(repoLanguageURL);
 				allGetRequests.push(getRepoLanguageJson(repoLanguageURL));
 			});
 			$.when.apply(this, allGetRequests ).done(function(){
@@ -55,23 +82,6 @@ $(document).ready(function() {
 		});
 
 	}
-
-	//Function that gets api request
-// 	function getApiRequest(githubSearch){
-// //	console.log("2)getApiRequest");
-// 		$.get(githubSearch, function(json){
-// 			getRepo(json);
-// 		});
-// 	} 
-
-	//Function that goes through each repo
-	// function getRepo(json){
-	// 	json.forEach(function(repo,index){
-	// 		var repoLanguageURL = json[index].languages_url;
-	// 		console.log(repoLanguageURL);
-	// 		getRepoLanguageJson(repoLanguageURL);
-	// 	});
-	// }
 
 	//function that gets the JSON in the language url
 	function getRepoLanguageJson(repoLanguageURL){
@@ -85,8 +95,6 @@ $(document).ready(function() {
 				//If languages have been added to array we want to test to
 				//see if current splitLang[0] has been used
 				if (languagesUsed.length > 0) {
-					//console.log(languageAlreadyAdded(splitLang[0]));
-
 					//if languageAlreadyAdded returns true we still want to add
 					//the value of the bytes to the langguage it matches in the languageArr
 					if(languageAlreadyAdded(splitLang[0])){
@@ -99,9 +107,8 @@ $(document).ready(function() {
 						amountOfLanguage : parseInt(splitLang[1])
 					};
 					languageArr.push(langObj);
-						//console.log(languageArr);
-						languagesUsed.push(splitLang[0]);
-					}
+					languagesUsed.push(splitLang[0]);
+				}
 				//if no languages have been used we want to create a langObj
 				//push into languageArr and push the language into languagesUsed	
 			}else{
@@ -110,10 +117,9 @@ $(document).ready(function() {
 					amountOfLanguage : parseInt(splitLang[1])
 				};
 				languageArr.push(langObj);
-					//console.log(languageArr);
-					languagesUsed.push(splitLang[0]);
-				}
-			});
+				languagesUsed.push(splitLang[0]);
+			}
+		});
 			}
 		});
 	}
@@ -123,13 +129,8 @@ $(document).ready(function() {
 	function languageAlreadyAdded(languageToCheck){
 		//check to see if languageToCheck and language are the same
 		function something(language){
-			//console.log("Language to Check: "+languageToCheck);
-			//console.log("Language: "+ language);
-			//console.log(languageToCheck == language);
 			return  languageToCheck == language;
 		}
-		//.log(languagesUsed.findIndex(something));
-		//console.log(languagesUsed.findIndex(something) === -1);
 		//if index is -1 that means it wasn't found which means we need to return
 		//false to create new langObj in getRepoLanguageJson
 		if (languagesUsed.findIndex(something) === -1) {
@@ -137,10 +138,9 @@ $(document).ready(function() {
 		//if found we want indexOflanguage to equal the index so we can add to the amountOfLanguage
 	}else{
 		indexOfLanguage = languagesUsed.findIndex(something);
-			//console.log(indexOfLanguage);
-			return true;
-		}
+		return true;
 	}
+}
 
 	//function that appends results to page
 	function addResults(){
@@ -175,31 +175,16 @@ $(document).ready(function() {
 	// //function that adds all bytes up
 	function addBytes(arrayWithBytes){
 		arrayWithBytes.forEach(function(lang,index){
-			//if(isNaN(lang.amountOfLanguage)){
-			//	arrayWithBytes.splice(index,1);
-			//}else{
-				totalBytes += lang.amountOfLanguage;
-			//	console.log(totalBytes);
-			//}
+			totalBytes += lang.amountOfLanguage;
 		});
-		//totalBytes += objWithBytes.amountOfLanguage;
 	}
-
-
 
 	//Function that turns bytes into percents
 	function bytesToPercent(arrayOfLanguages){
 		addBytes(arrayOfLanguages);
-		//var bytePercent = (objWithBytes.amountOfLanguage / totalBytes) * 100;
-				// 	//console.log(bytePercent);
-		//var roundedPercent = bytePercent.toFixed(2);
-		//objWithBytes.amountOfLanguage = roundedPercent;
 		arrayOfLanguages.forEach(function(lang, index){
-			//console.log(lang.amountOfLanguage);
 			var bytePercent = (lang.amountOfLanguage / totalBytes) * 100;
-			//console.log(bytePercent);
 			var roundedPercent = bytePercent.toFixed(2);
-			//console.log(roundedPercent);
 			lang.amountOfLanguage = roundedPercent;
 		});
 	}

@@ -31,4 +31,5 @@ https://trello.com/b/9j81eosO/project-2
 
 ## WireFrames
 
-<!-- Cool pictures of site will one day take this spot -->
+
+![alt text](https://github.com/chadkeeven/project-2-github-api/blob/master/images/wirefram-project2.png "Landing Page")

@@ -12,24 +12,20 @@ module.exports = function(passport) {
 			callback(err,user);
 		});
 	});
-
+	//Checks to see if user is already created,
+	//if no user exists then it will create a new one
 	passport.use('local-signup', new LocalStrategy({
 		usernameField: 'email',
 		passReqToCallback: true
 	}, function(req, email, password, callback){
 		User.findOne({'email': email}, function(err, user){
-			console.log(email);
-			console.log(password);
-			//console.log("user: " + user);
 			//There was an error
 			if(err) return callback(err);
 			//There is a user with this email
 			if(user){
-				console.log("Found a user!");
 				return callback(null, false, req.flash('signupMessage', 'Email in use'));
 				//You're new!
 			}else{
-				console.log("created user");
 				//Create a new user
 				let newUser = new User();
 				newUser.email = email;
