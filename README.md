@@ -13,17 +13,14 @@ https://fast-reaches-24983.herokuapp.com/
 * JQuery
 * Node.js
 * AJAX
-* Express.js
 * MongoDB
 * Passport node module
 * Mongoose node module
 * EJS
 * Github API
+* Mocha
 * Heroku for web hosting
 
-## Visit
-
-<!-- Some cool link will go here -->
 
 ## User Stories
 
